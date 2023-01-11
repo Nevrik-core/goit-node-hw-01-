@@ -1,5 +1,4 @@
 console.log("Project started");
-console.log("Hello");
 
 const { Command } = require("commander");
 const program = new Command();
@@ -26,12 +25,11 @@ const {
 async function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
     case "list":
-          const contacts = await listContacts();
-          console.table(contacts);
+      await listContacts();
       break;
 
     case "get":
-          await getContactById(id);
+      await getContactById(id);
       break;
 
     case "add":
@@ -39,7 +37,7 @@ async function invokeAction({ action, id, name, email, phone }) {
       break;
 
     case "remove":
-          await removeContact(id);
+      await removeContact(id);
       break;
 
     default:
