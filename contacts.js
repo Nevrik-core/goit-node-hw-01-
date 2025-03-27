@@ -30,7 +30,6 @@ async function writeDB(db) {
 
 async function listContacts() {
     const db = await readDB();
-    console.table(db);
     return db;
 }
 
@@ -40,15 +39,19 @@ async function getContactById(contactId) {
     const contact = db.find(
         (contact) => contact.id == contactId
     );
-    console.log(contact)
+    return contact || null;
 }
 
 
 async function removeContact(contactId) {
     const db = await readDB();
     const updateDB = db.filter(todo => todo.id !== contactId);
-    await writeDB(updateDB);
-    console.log(`Id: ${contactId} was deleted`);
+
+    if (index === -1) return null;
+
+    const [removedContact] = db.splice(index, 1);
+    await writeDB(db);
+    return removedContact;
 }
 
 
@@ -59,7 +62,8 @@ async function addContact(name, email, phone) {
     const db = await readDB();
     db.push(contact);
     await writeDB(db);
-    console.log(`${name} was added`)
+    return contact;
+
 }
 
 module.exports = {
